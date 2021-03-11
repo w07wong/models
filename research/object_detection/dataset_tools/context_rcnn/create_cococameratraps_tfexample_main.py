@@ -97,6 +97,7 @@ class ParseImage(beam.DoFn):
 
     image_datetime = str(image['date_captured'])
 
+    # TODO: Can remove this if not needed
     image_sequence_id = str(image['seq_id'])
     image_sequence_num_frames = int(image['seq_num_frames'])
     image_sequence_frame_num = int(image['frame_num'])
