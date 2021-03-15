@@ -93,14 +93,15 @@ class ParseImage(beam.DoFn):
     image_width = image['width']
     filename = image['file_name']
     image_id = image['id']
-    image_location_id = image['location']
+    # TODO: Can remove location if not needed
+    # image_location_id = image['location']
 
     image_datetime = str(image['date_captured'])
 
     # TODO: Can remove this if not needed
-    image_sequence_id = str(image['seq_id'])
-    image_sequence_num_frames = int(image['seq_num_frames'])
-    image_sequence_frame_num = int(image['frame_num'])
+    # image_sequence_id = str(image['seq_id'])
+    # image_sequence_num_frames = int(image['seq_num_frames'])
+    # image_sequence_frame_num = int(image['frame_num'])
 
     full_path = os.path.join(self._image_directory, filename)
 
@@ -131,16 +132,19 @@ class ParseImage(beam.DoFn):
             dataset_util.bytes_feature(encoded_jpg),
         'image/format':
             dataset_util.bytes_feature('jpeg'.encode('utf8')),
-        'image/location':
-            dataset_util.bytes_feature(str(image_location_id).encode('utf8')),
-        'image/seq_num_frames':
-            dataset_util.int64_feature(image_sequence_num_frames),
-        'image/seq_frame_num':
-            dataset_util.int64_feature(image_sequence_frame_num),
-        'image/seq_id':
-            dataset_util.bytes_feature(image_sequence_id.encode('utf8')),
+        # 'image/location':
+            # dataset_util.bytes_feature(str(image_location_id).encode('utf8')),
+        # 'image/seq_num_frames':
+            # dataset_util.int64_feature(image_sequence_num_frames),
+        # 'image/seq_frame_num':
+            # dataset_util.int64_feature(image_sequence_frame_num),
+        # 'image/seq_id':
+            # dataset_util.bytes_feature(image_sequence_id.encode('utf8')),
         'image/date_captured':
-            dataset_util.bytes_feature(image_datetime.encode('utf8'))
+            dataset_util.bytes_feature(image_datetime.encode('utf8')),
+        # TODO: Add mask to TFRecord
+        # 'image/object/mask':
+        #     dataset_util.bytes_feature()
     }
 
     num_annotations_skipped = 0
